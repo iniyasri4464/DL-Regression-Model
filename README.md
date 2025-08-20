@@ -1,5 +1,6 @@
 # Developing a Neural Network Regression Model
-
+### NAME : Iniyasri S
+### REG NO : 212223230081
 ## AIM
 To develop a neural network regression model for the given dataset.
 
@@ -40,32 +41,117 @@ Use the trained model to predict  for a new input value .
 
 ## PROGRAM
 
-### Name:
+### Name: Iniyasri S
 
-### Register Number:
+### Register Number: 212223230081
+
+```python
+import torch
+import torch.nn as nn
+import matplotlib.pyplot as plt
+
+torch.manual_seed(71)
+X = torch.linspace(1, 50, 50).reshape(-1, 1)
+e = torch.randint(-8, 9, (50, 1), dtype=torch.float)
+y = 2 * X + 1 + e
+
+plt.scatter(X, y, color="black")
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Genearted data for linear Regression')
+plt.show()
+```
+
+# Initialize the Model, Loss Function, and Optimizer
 
 ```python
 class Model(nn.Module):
     def __init__(self, in_features, out_features):
         super().__init__()
         #Include your code here
+    def forward(self, x):
+    return self.linear(x)
 
+torch.manual_seed(59)
+model = Model(1, 1)
 
+initial_weight = model.linear.weight.item()
+initial_bias = model.linear.bias.item()
+print("\nName: Iniyasri S")
+print("Registor No: 212223230081")
+print(f"Initial Weight: {initial_weight:.8f} , Initial Bias: {initial_bias:.8f}")
 
-# Initialize the Model, Loss Function, and Optimizer
+loss_function = nn.MSELoss()
+optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+
+epochs = 100
+losses = []
+
+for epoch in range(1, epochs+1):
+  optimizer.zero_grad()
+  y_pred = model(X)
+  loss = loss_function(y_pred, y)
+  losses.append(loss.item())
+
+  loss.backward()
+  optimizer.step()
+
+  print(f'Epoch: {epoch:2} loss: {loss.item():10.8f}, '
+        f'weight: {model.linear.weight.item():10.8f}, '
+        f'bias: {model.linear.bias.item():10.8f}')
+plt.plot(range(epochs), losses, color='blue')
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.title("Loss curve")
+plt.show()
+
+final_weight = model.linear.weight.item()
+final_bias = model.linear.bias.item()
+print("\nName: Iniyasri S")
+print("Registor No: 212223230081")
+print(f"\nFinal Weight: {final_weight:.8f} , Final Bias: {final_bias:.8f}")
+
+x1 = torch.tensor([X.min().item(), X.max().item()])
+y1 = x1 * final_weight + final_bias
+
+plt.scatter(X, y, label="Original Data")
+plt.plot(x1, y1, 'r', label="Best-Fit Line")
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.title("Trained Model: Best-Fit Line")
+plt.legend()
+plt.show()
+
+x_new = torch.tensor([120.0])
+y_new_pred = model(x_new).item()
+print("\nName: Iniyasri S")
+print("Registor No: 212223230081")
+print(f"Predicted for X = 120: {y_new_pred:.8f}")
 
 ```
 
 ### Dataset Information
-Include screenshot of the generated data
+
+<img width="795" height="591" alt="image" src="https://github.com/user-attachments/assets/77b7456e-2e29-4168-b3d0-6e66825f003b" />
+
+
+<img width="551" height="92" alt="image" src="https://github.com/user-attachments/assets/9f4aae94-1926-4c61-8cbc-29e8a5c5af8e" />
+
+
 
 ### OUTPUT
 Training Loss Vs Iteration Plot
 Best Fit line plot
-Include your plot here
 
-### New Sample Data Prediction
-Include your sample input and output here
+<img width="580" height="455" alt="image" src="https://github.com/user-attachments/assets/787711c0-5f01-427f-9159-89c2dcaad309" />
+
+<img width="570" height="99" alt="image" src="https://github.com/user-attachments/assets/51fca295-7933-4b33-b0e5-a8bbca593838" />
+
+
+
+### New Sample Data Prediction:
+
+<img width="546" height="201" alt="image" src="https://github.com/user-attachments/assets/65d6a336-45ce-4469-a710-bfd48184ccf1" />
 
 ## RESULT
 Thus, a neural network regression model was successfully developed and trained using PyTorch.
